@@ -5,19 +5,21 @@ import { SignUp } from "./components/authentication/SignUp";
 import { Feedback } from "./components/Feedback/Feedback";
 import QuickFeedbacks from "./components/Feedback/QuickFeedbacks";
 
+
 function App() {
   return (
     <>
       {/* <SignUp/> */}
       {/* <Login/> */}
       {/* <Feedback/> */}
-      <Routes>
-        <Route path="/" element={<Feedback />} />
+       <Routes>
+       <Route path="/" element={<Feedback />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/quickFeedbacks" element={<QuickFeedbacks />} />
+       <Route path="/signup" element={<SignUp />} />
+         <Route path="/quickFeedbacks" element={<QuickFeedbacks />} />
         {/* <Route path="/" element={<Navigate to={<Feedback/>}/>}/> */}
-      </Routes>
+         </Routes>   
+    
     </>
   );
 }

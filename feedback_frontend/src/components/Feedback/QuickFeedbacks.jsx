@@ -1,9 +1,13 @@
 import React from 'react'
+import Navbar from '../Navbar'
+import Footer from '../footer'
 
 const QuickFeedbacks = () => {
   return (
     <div>
-      <h1>All feedbacks</h1>
+     <Navbar/>
+     <h1>Hello</h1>
+  <Footer/>
     </div>
   )
 }

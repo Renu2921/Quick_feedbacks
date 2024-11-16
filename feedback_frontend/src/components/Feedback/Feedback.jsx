@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,8 +11,17 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label"
+import Navbar from "../Navbar";
+import Footer from "../footer";
+
 
 export function Feedback() {
+  const [loggerInUser, setLoggedInUser]=useState("");
+
+   useEffect(()=>{
+    setLoggedInUser(localStorage.getItem("loggedInUser"));
+   },[]);
+
   const [feedback, setFeedback] = useState({
     title: "",
     description: "",
@@ -36,7 +45,13 @@ export function Feedback() {
   }
 
   return (
-    <Card className="w-[350px] " >
+  
+    <div className=" ">
+      <Navbar/>
+    
+    <div className="mx-2  ">
+      {/* <h1>{loggedInUser}</h1> */}
+    <Card className="w-[400px] bg-slate-400 " >
       <CardHeader>
         <CardTitle className="mb-3">Create Feedback</CardTitle>
         <CardDescription>Create your own thoughts!</CardDescription>
@@ -77,5 +92,8 @@ export function Feedback() {
         </form>
       </CardContent>
     </Card>
+    <Footer/>
+    </div>
+    </div>
   );
 }

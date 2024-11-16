@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
+// const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
 const Users = require("./model/user");
@@ -11,9 +11,9 @@ const jwt = require("jsonwebtoken");
 
 const { signUpValidation, loginValidation, isAuthorized } = require("./middleware");
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
+
 
 const port = 8080;
 const mongo_url = process.env.MONGO_URL;
@@ -30,15 +30,28 @@ main()
   });
 
 // ********************signup route*******************
-app.post("/signUp", signUpValidation, async (req, res) => {
+
+app.use(express.json());
+app.use((req, res, next) => {
+  console.log("Request Body:", req.body); 
+  next();
+});
+
+app.use(cors({
+  origin: "*", 
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
+
+app.post("/signup", signUpValidation, async (req, res) => {
   try {
     const { username, email, password } = req.body;
-    // console.log(req.body);
+    console.log(req.body);
     const user = await Users.findOne({ email });
     if (user) {
       return res
         .status(404)
-        .json({ message: "User already exists, you can login" });
+        .json({ message: "User already exists, you can login",success:true });
     }
     const newUser = new Users({
       username,
@@ -48,10 +61,10 @@ app.post("/signUp", signUpValidation, async (req, res) => {
     newUser.password = await bcrypt.hash(password, 10);
     await newUser.save();
 
-    res.status(200).json({ message: "User registered successfully" });
+    res.status(200).json({ message: "User signup successfully", success:true });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", success:false });
   }
 });
 // *******************login route****************
@@ -63,14 +76,14 @@ app.post("/login", loginValidation, async (req, res) => {
     if (!user) {
       return res
         .status(404)
-        .json({ message: "User not exists, you can signup" });
+        .json({ message: "User not exists, you can signup", success:false});
     }
 
     const isPassEqual = await bcrypt.compare(password, user.password);
     if (!isPassEqual) {
       return res
         .status(404)
-        .json({ message: "please check your email or password" });
+        .json({ message: "please check your email or password" , success:false });
     }
     const jwtToken = jwt.sign(
       { email: user.email, _id: user._id },
@@ -81,13 +94,14 @@ app.post("/login", loginValidation, async (req, res) => {
       .status(200)
       .json({
         message: "User login successfully",
+        success:true,
         jwtToken,
         email,
         name: user.name,
       });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", success:false });
   }
 });
 
@@ -114,7 +128,7 @@ app.post("/feedbacks",isAuthorized, async (req, res) => {
     res.status(200).json(newFeedback);
     await newFeedback.save();
   } catch (error) {
-    res.status(500).json({ message: error });
+    res.status(500).json({ message: error, success:false });
   }
 });
 
