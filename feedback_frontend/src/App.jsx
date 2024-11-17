@@ -3,7 +3,7 @@ import "./App.css";
 import { Login } from "./components/authentication/Login";
 import { SignUp } from "./components/authentication/SignUp";
 import { Feedback } from "./components/Feedback/Feedback";
-import QuickFeedbacks from "./components/Feedback/QuickFeedbacks";
+import {QuickFeedbacks} from "./components/Feedback/QuickFeedbacks";
 
 
 function App() {

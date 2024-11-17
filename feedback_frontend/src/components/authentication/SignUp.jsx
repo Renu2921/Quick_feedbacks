@@ -45,7 +45,7 @@ export function SignUp() {
         handleSuccess(message);
         setTimeout(() => {
           navigate("/login");
-        }, 1000);
+        }, 900);
         setSignUpData({
           username: "",
           email: "",
