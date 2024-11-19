@@ -30,6 +30,8 @@ export function QuickFeedbacks() {
   const [feedbacks, setFeedbacks] = useState([]);
   const [loggedInUser, setLoggedInUser] = useState("");
 
+  // const [page,setPage]=useState(1);
+
   // Fetch token from localStorage on component mount
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -66,8 +68,8 @@ export function QuickFeedbacks() {
   return (
     <div>
       <Navbar />
-      <div className="mx-4 mt-4">
-        <h1 className="text-xl font-bold mb-4">Feedback List</h1>
+      <div className="mx-4 mt-5" style={{marginTop:"60px"}}>
+        <h1 className="text-xl font-bold mb-4 mt-5">Feedback List</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {feedbacks.length > 0 ? (
             feedbacks.map((feedback) => (
@@ -89,6 +91,9 @@ export function QuickFeedbacks() {
           )}
         </div>
       </div>
+      {/* {feedbacks.length>0 &&  <div className="pagination">
+        <h1>Hello</h1>
+        </div>} */}
       <Footer />
       <ToastContainer />
     </div>

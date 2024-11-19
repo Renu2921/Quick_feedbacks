@@ -10,10 +10,8 @@ const Feedback = require("./model/feedback");
 
 // const { signUpValidation, loginValidation, isAuthorized } = require("./middleware");
 
-const feedbackRouter=require("./routes/feedback.js");
-const userRouter=require("./routes/users.js");
-
-
+const feedbackRouter = require("./routes/feedback.js");
+const userRouter = require("./routes/users.js");
 
 const port = 8080;
 const mongo_url = process.env.MONGO_URL;
@@ -33,20 +31,20 @@ main()
 
 app.use(express.json());
 // app.use((req, res, next) => {
-//   // console.log("Request Body:", req.body); 
+//   // console.log("Request Body:", req.body);
 //   next();
 // });
 
-app.use(cors({
-  origin: "*", 
-  methods: ["GET", "POST"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-}));
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
-app.use("/",feedbackRouter);
-app.use("/",userRouter);
-
-
+app.use("/", feedbackRouter);
+app.use("/", userRouter);
 
 // app.post("/signup", signUpValidation, async (req, res) => {
 //   try {
@@ -122,10 +120,9 @@ app.use("/",userRouter);
 //   }
 // });
 // app.use((req, res, next) => {
-//   console.log("Request Body:", req.body); 
+//   console.log("Request Body:", req.body);
 //   next();
 // });
-
 
 // app.post("/feedbacks",isAuthorized, async (req, res) => {
 //   try {
@@ -144,4 +141,3 @@ app.use("/",userRouter);
 // });
 
 app.listen(port, () => console.log("server is listening the port 8080 "));
-
